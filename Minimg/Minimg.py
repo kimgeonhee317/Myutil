@@ -2,8 +2,6 @@
 import subprocess
 import os
 import argparse
-import datetime
-import hashlib
 
 def get_arguments():
     parser = argparse.ArgumentParser()
@@ -27,15 +25,15 @@ def make_directory(name):
         exit()
     return os.getcwd()+"/"+name
 
-def minimize_file(file, directory, num, hashstr):
+def minimize_file(file, directory, num):
     input_filename = file
     num = '{:02d}'.format(num)
-    output_filename = f'{num}_{hashstr}.png'
+    output_filename = f'{num}.png'
 
     # ImageMagick config
     percentage = "50%"
-    width = 1200
-    height = 900
+    width = 1600
+    height = 1200
 
     # Build the command to resize the image using ImageMagick
     command = [
@@ -49,16 +47,6 @@ def minimize_file(file, directory, num, hashstr):
     subprocess.run(command)
     os.rename(output_filename, os.path.join(directory, output_filename))
     print("[+] File converted : "+output_filename)
-
-def gen_hash():
-    # Get the current date and time
-    now = datetime.datetime.now()
-
-    now_str = now.isoformat()
-    hash_obj = hashlib.sha256(now_str.encode())
-    hash_str = hash_obj.hexdigest()
-    
-    return hash_str
 
 def main():
     files, cwd = read_directory()
@@ -77,8 +65,7 @@ def main():
         else:
             print("[+] Detected the File:", file)
             file_num+=1
-            hashstr = gen_hash()
-            minimize_file(file, directory_path, file_num, hashstr)
+            minimize_file(file, directory_path, file_num)
             
 if __name__ == "__main__":
     main()
