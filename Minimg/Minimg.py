@@ -32,8 +32,8 @@ def minimize_file(file, directory, num):
 
     # ImageMagick config
     percentage = "50%"
-    width = 1600
-    height = 1200
+    width = 1200
+    height = 900
 
     # Build the command to resize the image using ImageMagick
     command = [
