@@ -62,9 +62,12 @@ def gen_hash():
 
 def main():
     files, cwd = read_directory()
+    files.sort()
+    print(files) 
     options = get_arguments()
-    
     directory_path = make_directory(options.name)
+
+
     file_num = 0
     for file in files:
         full_path = os.path.join(cwd, file)
